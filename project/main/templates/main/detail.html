@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p><b>Nomi: </b> {{ product.title }}</p>
+    <p>
+        <b>Narxi: </b> {{product.price }}
+        {% if product.price >= 20 %}
+            qimmat
+        {% else %}
+            arzon
+        {% endif %}
+    </p>
+    <p><b>Categoriyasi: </b> {{ product.category }}</p>
+<a href="{% url 'home' %}">Ortga</a>
+</body>
+</html>

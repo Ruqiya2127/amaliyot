@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+{% for category in categories%}
+<a href="">brand.name</a>&nbsp;&nbsp;&nbsp;
+{% endfor %}
+
+{% for product in products %}
+<ul>
+    <li><b style="color: #a38cf8; cursor: grab;">Nomi: </b><a href="/product/{{ product.id }}/">{{ product.title }}</a></li>
+    <li>
+        <b style="color: rgb(94, 32, 91); ">Narxi: </b>{{ product.price }}
+        {% if product.price >= 20 %}
+        <span style="color: rgb(248, 49, 49);">
+            Qimmat
+        </span>
+        {% else %}
+        <span style="color: rgb(69, 238, 47);">
+            Arzon
+        </span>
+        {% endif %}
+    </li>
+    <li><b style= "font-family: 'Times New Roman', Times, serif; ">Malumot: </b>{{product.introduction}} </li>
+    <li><b style="background-color: rgb(211, 150, 150);">Categoriyasi: </b>{{product.category}}</li>
+</ul>
+<hr>
+{% endfor %}
+</body>
+</html>
