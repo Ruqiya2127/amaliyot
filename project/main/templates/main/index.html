@@ -1,35 +1,133 @@
+{% load static %}
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uz">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+
+    <title>Barcha mahsulotlar</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="{% static 'js/script.js' %}" defer></script>
 </head>
+
 <body>
 
-{% for category in categories%}
-<a href="">brand.name</a>&nbsp;&nbsp;&nbsp;
-{% endfor %}
+<header class="navbar">
+    <div class="container nav-content">
 
-{% for product in products %}
-<ul>
-    <li><b style="color: #a38cf8; cursor: grab;">Nomi: </b><a href="/product/{{ product.id }}/">{{ product.title }}</a></li>
-    <li>
-        <b style="color: rgb(94, 32, 91); ">Narxi: </b>{{ product.price }}
-        {% if product.price >= 20 %}
-        <span style="color: rgb(248, 49, 49);">
-            Qimmat
-        </span>
-        {% else %}
-        <span style="color: rgb(69, 238, 47);">
-            Arzon
-        </span>
-        {% endif %}
-    </li>
-    <li><b style= "font-family: 'Times New Roman', Times, serif; ">Malumot: </b>{{product.introduction}} </li>
-    <li><b style="background-color: rgb(211, 150, 150);">Categoriyasi: </b>{{product.category}}</li>
-</ul>
-<hr>
-{% endfor %}
+        <a href="{% url 'home' %}" class="logo">
+            🛒 Shop
+        </a>
+
+        <nav class="categories">
+            <a href="{% url 'home' %}" class="category-link">
+                Barcha mahsulotlar
+            </a>
+
+            {% for category in categories %}
+                <a href="{% url 'product_by_category' category.id %}"
+                   class="category-link">
+                    {{ category.name }}
+                </a>
+            {% endfor %}
+        </nav>
+
+    </div>
+</header>
+
+
+<main class="container">
+
+    <div class="page-title">
+        <h1>Barcha mahsulotlar</h1>
+        <p>Bizning eng yaxshi mahsulotlarimiz</p>
+    </div>
+
+
+    <section class="products">
+
+        {% for product in products %}
+
+        <article class="product-card">
+
+            <div class="product-info">
+
+                <h2 class="product-title">
+                    <span>Nomi:</span>
+
+                    <a href="/product/{{ product.id }}/">
+                        {{ product.title }}
+                    </a>
+                </h2>
+
+
+                <div class="product-row">
+                    <span class="label">Narxi:</span>
+
+                    <span class="price">
+                        {{ product.price }} Arzon
+                    </span>
+
+                    {% if product.price >= 20 %}
+                        <span class="price-status expensive">
+                            Qimmat
+                        </span>
+                    {% else %}
+                        <span class="price-status cheap">
+                            Arzon
+                        </span>
+                    {% endif %}
+                </div>
+
+
+                <div class="product-row">
+                    <span class="label">Ma'lumot:</span>
+
+                    <span class="description">
+                        {{ product.introduction }}
+                    </span>
+                </div>
+
+
+                <div class="product-row">
+                    <span class="label">Kategoriya:</span>
+
+                    <span class="category-badge">
+                        {{ product.category }}
+                    </span>
+                </div>
+
+
+                <a href="/product/{{ product.id }}/"
+                   class="detail-button">
+                    Batafsil ko'rish →
+                </a>
+
+            </div>
+
+        </article>
+
+        {% empty %}
+
+        <div class="empty">
+            <h2>Mahsulotlar topilmadi 😔</h2>
+            <p>Hozircha hech qanday mahsulot mavjud emas.</p>
+        </div>
+
+        {% endfor %}
+
+    </section>
+
+</main>
+
+
+<footer>
+    <div class="container">
+        <p>© 2026 Shop. Barcha huquqlar himoyalangan.</p>
+    </div>
+</footer>
+
 </body>
 </html>

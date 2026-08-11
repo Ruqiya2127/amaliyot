@@ -12,6 +12,14 @@ def index(request):
     }
     return render(request, 'main/index.html', context)
 
+def product_by_category(request, category_id):
+    categories = Category.objects.all()
+    products = Products.objects.filter(category_id= category_id)
+    context={
+        'products': products,
+        'categories': categories
+    }
+    return render(request, "main/index.html", context)
 
 def detail(request, product_id):
     product = Products.objects.get(id=product_id)
@@ -19,4 +27,4 @@ def detail(request, product_id):
     context={'product':product}
     return render(request, 'main/detail.html', context)
 
-    raise Http404('Car not found')
+    raise Http404('Product not found')

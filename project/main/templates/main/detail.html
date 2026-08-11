@@ -1,21 +1,110 @@
+{% load static %}
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uz">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+
+    <title>{{ product.title }}</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="{% static 'js/script.js' %}" defer></script>
 </head>
+
 <body>
-    <p><b>Nomi: </b> {{ product.title }}</p>
-    <p>
-        <b>Narxi: </b> {{product.price }}
-        {% if product.price >= 20 %}
-            qimmat
-        {% else %}
-            arzon
-        {% endif %}
-    </p>
-    <p><b>Categoriyasi: </b> {{ product.category }}</p>
-<a href="{% url 'home' %}">Ortga</a>
+
+<header class="navbar">
+    <div class="container nav-content">
+
+        <a href="{% url 'home' %}" class="logo">
+            🛒 Shop
+        </a>
+
+        <a href="{% url 'home' %}" class="back-link">
+            ← Barcha mahsulotlar
+        </a>
+
+    </div>
+</header>
+
+
+<main class="container detail-container">
+
+    <div class="detail-card">
+
+        <div class="detail-image">
+
+            {% if product.image %}
+                <img src="{{ product.image.url }}"
+                     alt="{{ product.title }}">
+            {% else %}
+                <img src="https://demofree.sirv.com/nope-not-here.jpg"
+                     alt="Rasm mavjud emas">
+            {% endif %}
+
+        </div>
+
+
+        <div class="detail-content">
+
+            <span class="detail-category">
+                {{ product.category }}
+            </span>
+
+            <h1>
+                {{ product.title }}
+            </h1>
+
+
+            <div class="detail-price">
+
+                <span>Narxi:</span>
+
+                <strong>
+                    {{ product.price }} Arzon
+                </strong>
+
+                {% if product.price >= 20 %}
+                    <span class="price-status expensive">
+                        Qimmat
+                    </span>
+                {% else %}
+                    <span class="price-status cheap">
+                        Arzon
+                    </span>
+                {% endif %}
+
+            </div>
+
+
+            <div class="detail-description">
+
+                <h3>Mahsulot haqida</h3>
+
+                <p>
+                    {{ product.introduction }}
+                </p>
+
+            </div>
+
+
+            <a href="{% url 'home' %}" class="back-button">
+                ← Ortga qaytish
+            </a>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<footer>
+    <div class="container">
+        <p>© 2026 Shop. Barcha huquqlar himoyalangan.</p>
+    </div>
+</footer>
+
 </body>
 </html>
