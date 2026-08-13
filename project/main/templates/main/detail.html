@@ -87,11 +87,32 @@
                 </p>
 
             </div>
+        <div class="'product-image">
+    <form method="post" action="{% url 'save_comment' product.pk %}">
+        {% csrf_token %}
+        <textarea name="text" style="font-size: 22pt; padding: 15px; border-radius: 15px;" rows="4" cols="40" id=""></textarea>
+        <button type="submit" style="font-size: 22pt; padding: 15px; border-radius: 15px;">Send</button>
+    </form>
 
+
+
+        </div>  
 
             <a href="{% url 'home' %}" class="back-button">
                 ← Ortga qaytish
             </a>
+            <h3 style="margin-top: 30px ;">Qoldirilgan izohlar</h3>
+
+            {% for comment in comment %}
+            <div class="introduction">
+                <p>{{ comment.text}}</p>
+                <p style="font-size: 10pt;">
+                    <b>Author: </b> <a href="">{{ comment.user.username}}</a>. 
+                    <span style="font-size: 8pt;">{{comment.created}}</span>
+                </p>
+
+            </div>
+            {% endfor %}  
 
         </div>
 
