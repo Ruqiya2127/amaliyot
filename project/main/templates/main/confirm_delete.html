@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commentni o'chirish</title>
+</head>
+<body>
+
+    <form method="post" action="{% url 'delete_comment' comment.id %}">
+        {% csrf_token %}
+
+        <h2>
+            Shu commentni o'chirmoqchimisiz? →
+            {{ comment.text }}
+        </h2>
+
+        <button type="submit">Ha, o'chirish</button>
+    </form>
+
+    <a href="{% url 'detail' comment.product.id %}">
+        Orqaga
+    </a>
+
+</body>
+</html>
