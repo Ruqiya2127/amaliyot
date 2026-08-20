@@ -84,3 +84,19 @@ def delete_comment(request, comment_id):
     else:
         print("login qiling")
         return redirect('home')
+    
+def create_product(request):
+    if request.user.is_staff:
+        if request.method == "POST":
+            form = ProductsForm(data=request.POST, files=request.FILES)
+            if form.is_valid():
+                product = form.save()
+                return redirect("detail", product_id=product.id)
+        else:
+            form = ProductsForm()
+        context = {
+            "form": form
+        }
+        return render(request, "main/add_product.html", context)
+    else:
+        return redirect("home")
