@@ -56,7 +56,13 @@
                 {{ product.title }}
             </h1>
     <h1>
-        {{ product.title }}&nbsp;&nbsp;&nbsp;<a href="{% url 'update_product' product.id %}">Update</a>&nbsp;&nbsp;&nbsp;<a href="{% url 'delete_product' product.id %}">Delete</a>
+        {{ product.title }}
+        &nbsp;&nbsp;&nbsp;
+        {% if request.user.is_superuser %}
+        <a href="{% url 'update_product' product.id %}">Update</a>
+        {% endif %}
+        &nbsp;&nbsp;&nbsp;
+        <a href="{% url 'delete_product' product.id %}">Delete</a>
     </h1>
 
 
