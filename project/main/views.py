@@ -1,8 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 from django.http import HttpRequest
 from .models import Products, Category, Comment
-from .form import CommentForm
+from .form import CommentForm, ProductForm
 
 def index(request):
     products = Products.objects.all()
@@ -88,15 +88,44 @@ def delete_comment(request, comment_id):
 def create_product(request):
     if request.user.is_staff:
         if request.method == "POST":
-            form = ProductsForm(data=request.POST, files=request.FILES)
+            form = ProductForm(data=request.POST, files=request.FILES)
             if form.is_valid():
                 product = form.save()
                 return redirect("detail", product_id=product.id)
         else:
-            form = ProductsForm()
+            form = ProductForm()
         context = {
             "form": form
         }
         return render(request, "main/add_product.html", context)
     else:
         return redirect("home")
+
+def update_product(request, product_id):
+
+    if request.user.is_superuser:
+        product = get_object_or_404(Products, pk= product_id)
+        if request.method == 'POST':
+            form = ProductForm(data=request.POST, files=request.FILES, instance=product)
+            if form.is_valid():
+                form.save()
+                return redirect("detail", product_id= product_id)
+        else:
+            form = ProductForm(instance=product)
+        context={
+            "form": form
+        }
+        return render(request, "main/add_product.html", context)
+    else:
+        return redirect('home')
+
+def delete_product(request, product_id):
+    product = get_object_or_404(Products, id=product_id)
+    if request.user.is_superuser:
+        if request.method == 'POST':
+            product.delete()
+            return redirect('detail', product_id=product_id)
+        else:
+            return render(request, 'main/product_delete.html', {'product': product} )
+    else:
+        return redirect('home')
